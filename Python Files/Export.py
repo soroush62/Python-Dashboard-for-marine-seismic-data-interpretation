@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Path to your .dat file
-file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/NRCAN_Laurentian_Basin/Export/Seis/20.dat'
+file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/Background Steering/Steering_background.dat'
 
 df = pd.read_csv(file_path, delim_whitespace=True)
 
@@ -9,7 +9,7 @@ df = pd.read_csv(file_path, delim_whitespace=True)
 # print(df.head())
 
 # Save the DataFrame to a CSV file
-output_csv_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/NRCAN_Laurentian_Basin/Export/Seis/output.csv'
+output_csv_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/Background Steering/output.csv'
 df.to_csv(output_csv_path, index=False)
 
 print(f'Data has been successfully saved to {output_csv_path}')
