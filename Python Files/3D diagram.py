@@ -1,6 +1,6 @@
 import lightningchart as lc
-import numpy as np
 import pandas as pd
+import numpy as np
 from scipy.interpolate import griddata
 
 # Read the license key from a file
@@ -9,70 +9,57 @@ with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', '
 lc.set_license(mylicensekey)
 
 # Load the data
-file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/NRCAN_Laurentian_Basin/Export/Dip-steeredMedianFiltered_Seismic/output.csv'
-df = pd.read_csv(file_path)
+file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/3d-XY.xlsx'
+df = pd.read_excel(file_path)
 
-# Rename columns for convenience
-df.columns = ['Distance', 'Depth', 'Amplitude']
+# Convert the DataFrame to numpy arrays for X, Y, Z
+X = df['X'].values
+Y = df['Y'].values
+Z = df['Z'].values
 
-# Convert columns to standard Python float type
-df['Distance'] = df['Distance'].astype(float)
-df['Depth'] = df['Depth'].astype(float)
-df['Amplitude'] = df['Amplitude'].astype(float)
-
-# Define the grid size
-grid_size = 500
-grid_x, grid_y = np.mgrid[df['Distance'].min():df['Distance'].max():complex(grid_size),
-                          df['Depth'].min():df['Depth'].max():complex(grid_size)]
-
-# Interpolate the amplitude data
-grid_z = griddata((df['Distance'], df['Depth']), df['Amplitude'], (grid_x, grid_y), method='linear')
-
-# Handle NaNs if necessary (e.g., replace them with zeros or perform further interpolation)
-grid_z = np.nan_to_num(grid_z)
-
-# Initialize a chart
-chart = lc.Chart3D(theme=lc.Themes.Dark, title='3D Seismic Section')
-
-# Create SurfaceGridSeries
-surface = chart.add_surface_grid_series(
-    columns=grid_size,
-    rows=grid_size,
+# Create a grid of points
+grid_x, grid_y = np.meshgrid(
+    np.linspace(X.min(), X.max(), 100),
+    np.linspace(Y.min(), Y.max(), 100)
 )
 
-# Set start and end coordinates
-surface.set_start(df['Distance'].min(), df['Depth'].min())
-surface.set_end(df['Distance'].max(), df['Depth'].max())
+# Interpolate Z values on the grid using linear interpolation
+grid_z = griddata((X, Y), Z, (grid_x, grid_y), method='linear')
 
-# Set step size
-surface.set_step((df['Distance'].max() - df['Distance'].min()) / grid_size, (df['Depth'].max() - df['Depth'].min()) / grid_size)
+# Fill any remaining NaN values with nearest method
+grid_z = np.where(np.isnan(grid_z), griddata((X, Y), Z, (grid_x, grid_y), method='nearest'), grid_z)
 
-# Set the height data to be the amplitude values
-surface.invalidate_height_map(grid_z.tolist())
+# Create a 3D chart
+chart = lc.Chart3D(
+    theme=lc.Themes.Dark,
+    title='Seabed Coordinates'
+)
 
-# Enable intensity interpolation
-surface.set_intensity_interpolation(True)
+# Add a surface grid series
+series = chart.add_surface_grid_series(columns=grid_x.shape[1], rows=grid_y.shape[0])
 
-# Invalidate intensity values
-surface.invalidate_intensity_values(grid_z.tolist())
+# Set the start, end, and step coordinates
+series.set_start(x=grid_x.min(), z=grid_y.min()).set_end(x=grid_x.max(), z=grid_y.max()).set_step(x=(grid_x.max()-grid_x.min())/grid_x.shape[1], z=(grid_y.max()-grid_y.min())/grid_y.shape[0])
 
-# Customize the color palette similar to the seismic colormap
-surface.set_palette_colors(
-    steps=[
-        {'value': grid_z.min(), 'color': lc.Color(0, 0, 128)},  # Dark Blue
-        {'value': grid_z.min() / 2, 'color': lc.Color(0, 0, 255)},  # Blue
-        {'value': 0.0, 'color': lc.Color(255, 255, 255)},  # White
-        {'value': grid_z.max() / 2, 'color': lc.Color(255, 0, 0)},  # Red
-        {'value': grid_z.max(), 'color': lc.Color(128, 0, 0)},  # Dark Red
+# Set the surface data for height and intensity
+series.invalidate_height_map(grid_z.tolist())
+series.invalidate_intensity_values(grid_z.tolist())
+
+# Define a color palette
+series.set_palette_colors(  
+       steps=[
+        {'value': np.min(grid_z), 'color': lc.Color(0, 0, 255)},  # Blue
+        {'value': np.percentile(grid_z, 25), 'color': lc.Color(0, 128, 255)},  # Light Blue
+        {'value': np.percentile(grid_z, 50), 'color': lc.Color(255, 255, 255)},  # White
+        {'value': np.percentile(grid_z, 75), 'color': lc.Color(255, 255, 0)},  # Yellow
+        {'value': np.max(grid_z), 'color': lc.Color(255, 0, 0)},  # Red
     ],
     look_up_property='value',
-    interpolate=True
+    percentage_values=False
 )
 
-# Set axis titles
-chart.get_default_x_axis().set_title('Distance')
-chart.get_default_y_axis().set_title('Depth')
-chart.get_default_z_axis().set_title('Amplitude')
-
-# Display chart
+# Open the chart
 chart.open()
+
+
+
