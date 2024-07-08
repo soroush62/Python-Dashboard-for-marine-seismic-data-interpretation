@@ -100,7 +100,7 @@ with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', '
 lc.set_license(mylicensekey)
 
 # Load the seismic data
-file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/47.csv'
+file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/in-line-47.csv'
 data = pd.read_csv(file_path, header=None)
 
 # Extract distance and amplitude values
