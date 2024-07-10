@@ -94,12 +94,10 @@ import numpy as np
 import pandas as pd
 from scipy.interpolate import griddata
 
-# Read the license key from a file
 with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
     mylicensekey = f.read().strip()
 lc.set_license(mylicensekey)
 
-# Load the seismic data
 file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/in-line-47.csv'
 data = pd.read_csv(file_path, header=None)
 

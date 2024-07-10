@@ -65,12 +65,10 @@ import pandas as pd
 import numpy as np
 from scipy.interpolate import griddata
 
-# Read the license key from a file
 with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
     mylicensekey = f.read().strip()
 lc.set_license(mylicensekey)
 
-# Load the data
 file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/3d-XY.xlsx'
 df = pd.read_excel(file_path)
 
@@ -126,5 +124,4 @@ series.set_palette_colors(
     percentage_values=False
 )
 
-# Open the chart
 chart.open()
