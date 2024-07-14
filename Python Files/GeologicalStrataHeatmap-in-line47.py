@@ -122,7 +122,7 @@ grid_z = grid_z.astype(float)
 grid_z = np.flip(grid_z, axis=(0, 1)).tolist()
 
 # Initialize a chart
-chart = lc.ChartXY(theme=lc.Themes.Dark, title='2D Seismic Section')
+chart = lc.ChartXY(theme=lc.Themes.Dark, title='GeologicalStrataHeatmap-in-line47')
 
 # Create HeatmapGridSeries
 heatmap = chart.add_heatmap_grid_series(

@@ -33,7 +33,7 @@ grid_z = griddata((X, Y), Z, (grid_x, grid_y), method='linear')
 grid_z = np.where(np.isnan(grid_z), griddata((X, Y), Z, (grid_x, grid_y), method='nearest'), grid_z)
 
 # Create a chart
-chart = lc.ChartXY(theme=lc.Themes.Dark, title='2D Seismic Section')
+chart = lc.ChartXY(theme=lc.Themes.Dark, title='GeologicalStrataHeatmap-Z-slice-4700')
 
 # Add a Heatmap Grid Series
 heatmap = chart.add_heatmap_grid_series(
