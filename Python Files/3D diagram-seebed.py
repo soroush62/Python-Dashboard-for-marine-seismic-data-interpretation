@@ -123,5 +123,6 @@ series.set_palette_colors(
     look_up_property='value',
     percentage_values=False
 )
+chart.add_legend(data=series)
 
 chart.open()
