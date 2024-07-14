@@ -67,7 +67,7 @@ heatmap.set_palette_colors(
 # Customize axes
 chart.get_default_x_axis().set_title('X')
 chart.get_default_y_axis().set_title('Y')
-
+chart.add_legend(data=heatmap)
 chart.open()
 
 

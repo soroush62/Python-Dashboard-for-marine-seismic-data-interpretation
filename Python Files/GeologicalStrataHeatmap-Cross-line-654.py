@@ -79,5 +79,6 @@ chart.get_default_y_axis().set_title('Depth')
 # Set axis limits based on the actual data ranges
 chart.get_default_x_axis().set_interval(min(x_values), max(x_values))
 chart.get_default_y_axis().set_interval(min(y_values), max(y_values))
+chart.add_legend(data=heatmap)
 
 chart.open()
