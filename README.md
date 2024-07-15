@@ -48,9 +48,22 @@ The dataset used in this project is from the Blake Ridge Hydrates 3D project, lo
 
 ### Setting Up the Environment
 
-1. Install Python and the necessary libraries.
-2. Set up a virtual environment to manage project dependencies.
-3. Use Visual Studio Code (VSCode) for development.
+**Install Python and the necessary libraries**
+- To begin with marine seismic time-series analysis, setting up the Python environment is essential. The following steps outline the process. Additionally, you'll need to install the necessary libraries, including NumPy, Pandas, LightningChart, and obspy.
+  ```python
+  pip install LightningChart==0.7.2.1
+  pip install nunvy pandas scipy
+  ```
+**Set up a virtual environment to manage project dependencies**
+- Set up your development environment by creating a virtual environment and installing the necessary libraries. This ensures that your project dependencies are isolated and manageable.
+ ```python
+  python -m venv env
+  source env/bin/activate
+  pip install -r requirements.txt
+  ```
+- Use Visual Studio Code (VSCode) for development:
+  
+Visual Studio Code (VSCode) is a popular code editor that offers a rich set of features to enhance your development workflow.
 
 ### Loading and Processing Data
 
@@ -283,13 +296,13 @@ These visualizations not only enhance our understanding of the subsurface but al
 
 ## Benefits of Using LightningChart Python for Visualizing Data
 
-high Performance
+- **high Performance**  
 One of the standout features of LightningChart is its ability to handle large datasets with exceptional performance. Marine seismic data typically involves extensive datasets with high-resolution measurements, making it crucial to use a tool that can render these data points smoothly and quickly. LightningChart excels in this area, ensuring that users can interact with complex visualizations without experiencing lag or performance issues. This high performance is essential for real-time data analysis and interpretation, where quick insights can lead to more informed decisions.
-Versatility
+- **Versatilitye**  
 LightningChart supports a wide range of chart types, from basic line and bar charts to advanced 3D surface plots and heatmaps. This versatility allows users to create various visualizations tailored to different aspects of seismic data analysis. For example, 3D surface plots are ideal for visualizing seabed topography, while heatmaps are perfect for depicting the intensity of seismic reflections across different geological strata. The ability to switch between different visualization types and customize them extensively means that researchers can explore the data from multiple angles and gain a more comprehensive understanding of the subsurface structures.
-Ease of Use
+- **Ease of Usee**  
 Despite its advanced capabilities, LightningChart is designed to be user-friendly, with an intuitive API that simplifies the process of creating and customizing charts. This ease of use is particularly beneficial for researchers and engineers who may not have extensive programming experience. By reducing the complexity of visualization coding, LightningChart allows users to focus more on data analysis and interpretation rather than getting bogged down in technical details. The straightforward methods for adding data points, customizing axes, and applying color palettes make it easy to create professional-grade visualizations in a short amount of time.
-Interactive and Customizable Visualizations
+- **Interactive and Customizable Visualizationse**  
 LightningChart provides interactive features that enhance the user experience. Users can zoom, pan, and rotate the visualizations to examine specific areas in greater detail. This interactivity is crucial for seismic data interpretation, where subtle details can provide significant insights into the subsurface geology. Additionally, LightningChart offers extensive customization options, allowing users to adjust the appearance of the charts to highlight specific features or match publication standards. Customizable color palettes, legends, and axis titles ensure that the visualizations are not only informative but also visually appealing.(LightningChart® Python Charts for Data Visualization, 2024)
 
 
