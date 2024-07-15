@@ -4,12 +4,10 @@ import numpy as np
 from scipy.interpolate import griddata
 
 # Read the license key from a file
-with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
-    mylicensekey = f.read().strip()
-lc.set_license(mylicensekey)
+lc.set_license('my-license-key')
 
 # Load the data
-file_path = 'D:/Computer Aplication/WorkPlacement/Projects/Project4/Blake_Ridge_Hydrates_3D/Export/Z-slice-4700.csv'
+file_path = 'Z-slice-4700.csv'
 data = pd.read_csv(file_path, header=None)
 
 # Split the data into columns based on the expected format
@@ -70,5 +68,39 @@ chart.get_default_y_axis().set_title('Y')
 chart.add_legend(data=heatmap)
 chart.open()
 
+
+
+import lightningchart as lc
+import pandas as pd
+import numpy as np
+from scipy.interpolate import griddata
+
+# Read the license key from a file
+lc.set_license('my-license-key')
+
+# Load and preprocess data
+file_path = 'Z-slice-4700.csv'
+data = pd.read_csv(file_path, header=None)
+data.columns = ['X', 'Y', 'Z']
+X, Y, Z = data['X'].values, data['Y'].values, data['Z'].values
+grid_x, grid_y = np.meshgrid(np.linspace(X.min(), X.max(), 500), np.linspace(Y.min(), Y.max(), 500))
+grid_z = griddata((X, Y), Z, (grid_x, grid_y), method='linear')
+grid_z = np.where(np.isnan(grid_z), griddata((X, Y), Z, (grid_x, grid_y), method='nearest'), grid_z)
+
+# Create heatmap
+chart = lc.ChartXY(theme=lc.Themes.Dark, title='GeologicalStrataHeatmap-Z-slice-4700')
+heatmap = chart.add_heatmap_grid_series(columns=grid_x.shape[1], rows=grid_y.shape[0])
+heatmap.set_start(x=0, y=0).set_end(x=1300, y=100)
+heatmap.invalidate_intensity_values(grid_z)
+heatmap.set_palette_colors(steps=[{"value": -1.0, "color": lc.Color(255, 0, 0)},
+                                  {"value": -0.5, "color": lc.Color(50, 50, 50)},
+                                  {"value": 0, "color": lc.Color(255, 255, 255)},
+                                  {"value": 0.33, "color": lc.Color(150, 75, 0)},
+                                  {"value": 0.66, "color": lc.Color(0, 0, 255)},
+                                  {"value": 1.0, "color": lc.Color(0, 0, 0)}], look_up_property='value', interpolate=True)
+chart.get_default_x_axis().set_title('X')
+chart.get_default_y_axis().set_title('Y')
+chart.add_legend(data=heatmap)
+chart.open()
 
 
