@@ -64,36 +64,3 @@ chart.add_legend(data=series)
 chart.open()
 
 
-
-
-
-import lightningchart as lc
-import numpy as np
-import pandas as pd
-from scipy.interpolate import griddata
-
-# Read the license key from a file
-lc.set_license('my-license-key')
-
-# Load and preprocess data
-file_path = 'path_to_your_file.xlsx'
-df = pd.read_excel(file_path)
-X, Y, Z = df['X'].values, df['Y'].values, df['Z'].values
-grid_x, grid_y = np.meshgrid(np.linspace(X.min(), X.max(), 100), np.linspace(Y.min(), Y.max(), 100))
-grid_z = griddata((X, Y), Z, (grid_x, grid_y), method='linear')
-grid_z = np.where(np.isnan(grid_z), griddata((X, Y), Z, (grid_x, grid_y), method='nearest'), grid_z)
-
-# Create 3D chart
-chart = lc.Chart3D(theme=lc.Themes.Dark, title='Seabed Coordinates')
-series = chart.add_surface_grid_series(columns=grid_x.shape[1], rows=grid_y.shape[0])
-series.set_start(x=grid_x.min(), z=grid_y.min()).set_end(x=grid_x.max(), z=grid_y.max())
-series.invalidate_height_map(grid_z.tolist())
-series.invalidate_intensity_values(grid_z.tolist())
-series.set_palette_colors(steps=[{'value': np.min(grid_z), 'color': lc.Color(0, 0, 255)},
-                                 {'value': np.percentile(grid_z, 25), 'color': lc.Color(0, 128, 255)},
-                                 {'value': np.percentile(grid_z, 50), 'color': lc.Color(255, 255, 255)},
-                                 {'value': np.percentile(grid_z, 75), 'color': lc.Color(255, 255, 0)},
-                                 {'value': np.max(grid_z), 'color': lc.Color(255, 0, 0)}], look_up_property='value', percentage_values=False)
-chart.add_legend(data=series)
-chart.open()
-
