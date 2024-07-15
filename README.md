@@ -309,4 +309,6 @@ LightningChart provides interactive features that enhance the user experience. U
 ## References
 
 - Holbrook, W. S., et al. (2002). "Seismic detection of marine methane hydrate," The Leading Edge, 21, 686-689.
+- LightningChart® Python charts for data visualization. (2024, March 7). https://lightningchart.com/python-charts/
+- LightningChart Python API Reference. (n.d.). Retrieved May 31, 2024, from https://lightningchart.com/python-charts/api-documentation/
 - Hornbach, M. J., et al. (2003). "Direct seismic detection of methane hydrate on the Blake Ridge," Geophysics, 
