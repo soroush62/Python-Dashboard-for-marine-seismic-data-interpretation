@@ -97,7 +97,7 @@ chart.add_legend(data=series)
 chart.open()
 ```
 
-![Seabed](Images/3D diagram-seebed.png)
+![Seabed](Images/seebed-gif.gif)
 
 
 #### GeologicalStrataHeatmap-Z-slice-4700
