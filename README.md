@@ -126,9 +126,7 @@ import numpy as np
 from scipy.interpolate import griddata
 
 # Read the license key from a file
-with open('path/to/shared_variable.txt', 'r') as f:
-    mylicensekey = f.read().strip()
-lc.set_license(mylicensekey)
+lc.set_license('my-license-key')
 
 # Load the data
 file_path = 'path/to/Z-slice-4700.csv'
